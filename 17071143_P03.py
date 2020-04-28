@@ -10,9 +10,10 @@ from queue import PriorityQueue
 pathcost = PriorityQueue()
 
 class Node: 
-    def __init__(self, state=None, parent=None): 
+    def __init__(self, state=None, parent=None, cost = 0): 
         self.state = state
         self.parent = parent
+        self.cost = cost
         self.children = []
         
     def addChildren(self, children):
@@ -24,11 +25,9 @@ def expansion(state_space, node):
     children = []
     for [m, n, c] in state_space: 
         if m == node.state: 
-            children.append(Node(n, node.state))
-            pathcost.put(Node(c, node.state))
+            children.append(Node(n, node.state, node.cost+c))
         elif n == node.state: 
-            children.append(Node(m, node.state))
-            pathcost.put(Node(c, node.state))
+            children.append(Node(m, node.state, node.cost+c))
     return children
 
 
